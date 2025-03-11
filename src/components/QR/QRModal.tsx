@@ -16,12 +16,6 @@ export interface QRModalProps {
   disabled?: boolean;
 }
 
-function canvasToBlobAsync(canvas: HTMLCanvasElement): Promise<Blob | null> {
-  return new Promise(function(resolve, _) {
-      canvas.toBlob(resolve);
-  });
-}
-
 export function QRModal(props: QRModalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const blobRef = useRef<Blob | null>(null);
@@ -42,12 +36,11 @@ export function QRModal(props: QRModalProps) {
       return;
     }
 
-    (async () => {
-      // For canvas, we just extract the image data and send that directly.
-      const blob = await canvasToBlobAsync(node);
-      blobRef.current = blob;
-    })();
-  }, [canvasRef.current]);
+    // For canvas, we just extract the image data and send that directly.
+    node.toBlob(blob => {
+        blobRef.current = blob;
+    });
+  });
   //Two seperate values are required- qrCodePreview is what is shown to the user beneath the QR code, qrCodeData is the actual data.
 
   return (
