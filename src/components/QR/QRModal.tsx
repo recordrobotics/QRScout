@@ -62,7 +62,7 @@ export function QRModal(props: QRModalProps) {
                   const item = new ClipboardItem({ "image/png": blob });
                   navigator.clipboard.write([item]); 
               });
-            }
+            }}
           >
             <Copy className="size-4" /> Copy Image
           </Button>
