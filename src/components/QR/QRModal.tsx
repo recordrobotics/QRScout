@@ -1,6 +1,6 @@
 import { Copy, QrCode } from 'lucide-react';
-import { QRCodeSVG } from 'qrcode.react';
-import { useMemo } from 'react';
+import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
+import { useMemo, useRef } from 'react';
 import { getFieldValue, useQRScoutState } from '../../store/store';
 import { Button } from '../ui/button';
 import {
@@ -17,6 +17,7 @@ export interface QRModalProps {
 }
 
 export function QRModal(props: QRModalProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const fieldValues = useQRScoutState(state => state.fieldValues);
   const formData = useQRScoutState(state => state.formData);
   const title = `${getFieldValue('robot')} - M${getFieldValue(
@@ -44,10 +45,27 @@ export function QRModal(props: QRModalProps) {
         <div className="flex flex-col items-center gap-6">
           <div className="bg-white p-4 rounded-md">
             <QRCodeSVG className="m-2 mt-4" size={256} value={qrCodeData} />
+            <QRCodeCanvas ref={canvasRef} size={256} value={qrCodeData} style={{display: 'none'}} />
           </div>
           <PreviewText data={qrCodeData} />
         </div>
         <DialogFooter>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              const node = canvasRef.current;
+              if (node == null) {
+                return;
+              }
+              // For canvas, we just extract the image data and send that directly.
+              node.toBlob(function(blob) { 
+                  const item = new ClipboardItem({ "image/png": blob });
+                  navigator.clipboard.write([item]); 
+              });
+            }
+          >
+            <Copy className="size-4" /> Copy Image
+          </Button>
           <Button
             variant="ghost"
             onClick={() => navigator.clipboard.writeText(qrCodeData)}
