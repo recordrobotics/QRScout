@@ -58,7 +58,12 @@ export function QRModal(props: QRModalProps) {
                 return;
               }
               // For canvas, we just extract the image data and send that directly.
-              node.toBlob(function(blob) { 
+              node.toBlob(function (blob) { 
+                  if (blob == null) {
+                    alert("Error copying image");
+                    return;
+                  }
+                
                   const item = new ClipboardItem({ "image/png": blob });
                   navigator.clipboard.write([item]); 
               });
