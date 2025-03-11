@@ -16,6 +16,12 @@ export interface QRModalProps {
   disabled?: boolean;
 }
 
+function canvasToBlobAsync(canvas: HTMLCanvasElement): Promise<Blob | null> {
+  return new Promise(function(resolve, _) {
+      canvas.toBlob(resolve);
+  });
+}
+
 export function QRModal(props: QRModalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fieldValues = useQRScoutState(state => state.fieldValues);
@@ -52,21 +58,20 @@ export function QRModal(props: QRModalProps) {
         <DialogFooter>
           <Button
             variant="ghost"
-            onClick={() => {
+            onClick={async () => {
               const node = canvasRef.current;
               if (node == null) {
                 return;
               }
               // For canvas, we just extract the image data and send that directly.
-              node.toBlob(function (blob) { 
-                  if (blob == null) {
-                    alert("Error copying image");
-                    return;
-                  }
-                
-                  const item = new ClipboardItem({ "image/png": blob });
-                  navigator.clipboard.write([item]); 
-              });
+              const blob = await canvasToBlobAsync(node);
+              if (blob == null) {
+                alert("Error copying image");
+                return;
+              }
+            
+              const item = new ClipboardItem({ "image/png": blob });
+              navigator.clipboard.write([item]); 
             }}
           >
             <Copy className="size-4" /> Copy Image
