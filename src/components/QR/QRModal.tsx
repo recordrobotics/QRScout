@@ -45,7 +45,7 @@ export function QRModal(props: QRModalProps) {
         <div className="flex flex-col items-center gap-6">
           <div className="bg-white p-4 rounded-md">
             <QRCodeSVG className="m-2 mt-4" size={256} value={qrCodeData} />
-            <QRCodeCanvas ref={canvasRef} size={256} value={qrCodeData} style={{display: 'none'}} />
+            <QRCodeCanvas ref={canvasRef} size={256} value={qrCodeData} marginSize={4} style={{display: 'none'}} />
           </div>
           <PreviewText data={qrCodeData} />
         </div>
