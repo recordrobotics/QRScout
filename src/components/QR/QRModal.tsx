@@ -47,7 +47,7 @@ export function QRModal(props: QRModalProps) {
       const blob = await canvasToBlobAsync(node);
       blobRef.current = blob;
     })();
-  }, [canvasRef]);
+  }, [canvasRef.current]);
   //Two seperate values are required- qrCodePreview is what is shown to the user beneath the QR code, qrCodeData is the actual data.
 
   return (
@@ -74,7 +74,7 @@ export function QRModal(props: QRModalProps) {
             variant="ghost"
             onClick={() => {
               const blob = blobRef.current;
-              
+
               if (blob == null) {
                 alert("Error copying image");
                 return;
