@@ -138,7 +138,10 @@
           "code": "CPos",
           "formResetBehavior": "reset",
           "defaultValue": "",
-          "choices": { "SP1": "High", "SP2": "Low" }
+          "choices": {
+            "SP1": "High",
+            "SP2": "Low"
+          }
         }
       ]
     },
@@ -161,7 +164,8 @@
           "required": false,
           "code": "timer",
           "formResetBehavior": "reset",
-          "defaultValue": 0
+          "defaultValue": 0,
+          "outputType": "average"
         },
         {
           "title": "Coral L1 Scored",
@@ -230,14 +234,6 @@
           "step": 1
         },
         {
-          "title": "Intentionally Removed Algae?",
-          "type": "boolean",
-          "required": false,
-          "code": "dto",
-          "formResetBehavior": "reset",
-          "defaultValue": false
-        },
-        {
           "title": "Auto Foul",
           "type": "counter",
           "required": false,
@@ -253,12 +249,18 @@
       "name": "Teleop",
       "fields": [
         {
-          "title": "Intentionally Removed Algae?",
-          "type": "boolean",
+          "title": "Removed Algae",
+          "description": "Performance of the algae remover.",
+          "type": "select",
           "required": false,
           "code": "daT",
           "formResetBehavior": "reset",
-          "defaultValue": false
+          "defaultValue": "A0",
+          "choices": {
+            "A0": "Didn't remove",
+            "A1": "With difficulty",
+            "A2": "With ease"
+          }
         },
         {
           "title": "Pickup Location",
@@ -272,8 +274,7 @@
             "2": "Ground",
             "3": "Human Player",
             "4": "Both"
-          },
-          "multiSelect": true
+          }
         },
         {
           "title": "Coral L1 Scored",
