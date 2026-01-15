@@ -2,7 +2,8 @@
     "title": "QRScout",
     "page_title": "Rebuilt",
     "delimiter": "\t",
-    "teamNumber": 2713,
+    "teamNumber": 6731,
+    "year": 2026,
     "floatingField": {
         "show": false,
         "codeValue": "teamNumber"
