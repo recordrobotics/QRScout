@@ -12,6 +12,7 @@ export const inputTypeSchema = z
     'multi-select',
     'image',
     'action-tracker',
+    'queued-counter',
     'TBA-team-and-robot',
     'TBA-match-number',
   ])
@@ -24,6 +25,15 @@ export const inputBaseSchema = z.object({
   required: z.boolean().describe('Whether this input is required'),
   code: z.string().describe('A unique code for this input'),
   disabled: z.boolean().optional().describe('Whether this input is disabled'),
+  dependsOn: z
+    .object({
+      code: z.string().describe('The code of the field this input depends on'),
+      value: z
+        .unknown()
+        .describe('The value the field must have to unlock this input'),
+    })
+    .optional()
+    .describe('Condition to unlock this field'),
   formResetBehavior: z
     .enum(['reset', 'preserve', 'increment'])
     .default('reset')
@@ -62,6 +72,14 @@ export const multiSelectInputSchema = inputBaseSchema.extend({
 
 export const counterInputSchema = inputBaseSchema.extend({
   type: z.literal('counter'),
+  min: z.number().optional().describe('The minimum value'),
+  max: z.number().optional().describe('The maximum value'),
+  step: z.number().optional().describe('The step value').default(1),
+  defaultValue: z.number().default(0).describe('The default value'),
+});
+
+export const queuedCounterInputSchema = inputBaseSchema.extend({
+  type: z.literal('queued-counter'),
   min: z.number().optional().describe('The minimum value'),
   max: z.number().optional().describe('The maximum value'),
   step: z.number().optional().describe('The step value').default(1),
@@ -171,6 +189,7 @@ export const sectionSchema = z.object({
       timerInputSchema,
       imageInputSchema,
       actionTrackerInputSchema,
+      queuedCounterInputSchema,
       tbaTeamAndRobotInputSchema,
       tbaMatchNumberInputSchema,
     ]),
@@ -329,6 +348,7 @@ export type BooleanInputData = z.infer<typeof booleanInputSchema>;
 export type TimerInputData = z.infer<typeof timerInputSchema>;
 export type ImageInputData = z.infer<typeof imageInputSchema>;
 export type ActionTrackerInputData = z.infer<typeof actionTrackerInputSchema>;
+export type QueuedCounterInputData = z.infer<typeof queuedCounterInputSchema>;
 export type ActionData = z.infer<typeof actionSchema>;
 export type TBATeamAndRobotInputData = z.infer<
   typeof tbaTeamAndRobotInputSchema
@@ -346,6 +366,7 @@ export type InputPropsMap = {
   timer: TimerInputData;
   image: ImageInputData;
   'action-tracker': ActionTrackerInputData;
+  'queued-counter': QueuedCounterInputData;
   'TBA-team-and-robot': TBATeamAndRobotInputData;
   'TBA-match-number': TBAMatchNumberInputData;
 };

@@ -7,7 +7,7 @@ type SectionProps = {
 
 export function Section(props: SectionProps) {
   return (
-    <Card>
+    <Card data-section={props.title}>
       <CardHeader>
         {props.title && (
           <CardTitle className="font-rhr-ns">{props.title}</CardTitle>

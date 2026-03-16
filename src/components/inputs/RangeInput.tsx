@@ -14,6 +14,14 @@ export default function RangeInput(props: ConfigurableInputProps) {
     return <div>Invalid input</div>;
   }
 
+  const isEnabled = useQRScoutState(state => {
+    if (!data.dependsOn) return true;
+    const depField = state.fieldValues.find(
+      f => f.code === data.dependsOn?.code,
+    );
+    return depField?.value === data.dependsOn?.value;
+  });
+
   const [value, setValue] = useState(data.defaultValue);
 
   const resetState = useCallback(
@@ -50,17 +58,24 @@ export default function RangeInput(props: ConfigurableInputProps) {
 
   return (
     <div className="flex flex-col items-center gap-2 p-2">
-      <span className="capitalize text-secondary-foreground text-2xl">
+      <span
+        className={`capitalize text-2xl ${
+          isEnabled
+            ? 'text-secondary-foreground'
+            : 'text-secondary-foreground/50'
+        }`}
+      >
         {value}
       </span>
       <Slider
-        className="w-full py-2 px-1"
+        className={`w-full py-2 px-1 ${isEnabled ? '' : 'opacity-50'}`}
         min={data.min}
         max={data.max}
-        value={[value || 0]}
-        defaultValue={[data.defaultValue || 0]}
+        step={data.step}
+        value={[typeof value === 'number' ? value : 0]}
         id={data.title}
         onValueChange={handleChange}
+        disabled={!isEnabled}
       />
     </div>
   );

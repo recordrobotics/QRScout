@@ -1,16 +1,18 @@
-import { InputTypes } from './BaseInputProps';
 import ActionTrackerInput from './ActionTrackerInput';
+import { InputTypes } from './BaseInputProps';
 import CheckboxInput from './CheckboxInput';
 import CounterInput from './CounterInput';
 import ImageInput from './ImageInput';
+import MultiSelectInput from './MultiSelectInput';
 import NumberInput from './NumberInput';
+import QueuedCounterInput from './QueuedCounterInput';
 import RangeInput from './RangeInput';
 import SelectInput from './SelectInput';
 import StringInput from './StringInput';
-import TimerInput from './TimerInput';
-import MultiSelectInput from './MultiSelectInput';
-import TBATeamAndRobotInput from './TBATeamAndRobotInput';
 import TBAMatchNumberInput from './TBAMatchNumberInput';
+import TBATeamAndRobotInput from './TBATeamAndRobotInput';
+import TimerInput from './TimerInput';
+
 export interface ConfigurableInputProps {
   section: string;
   code: string;
@@ -31,6 +33,8 @@ export default function ConfigurableInput(props: ConfigurableInputProps) {
       return <CheckboxInput {...props} key={props.code} />;
     case 'counter':
       return <CounterInput {...props} key={props.code} />;
+    case 'queued-counter':
+      return <QueuedCounterInput {...props} key={props.code} />;
     case 'range':
       return <RangeInput {...props} key={props.code} />;
     case 'timer':
