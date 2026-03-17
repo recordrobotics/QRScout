@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { setConfig, useQRScoutState } from '@/store/store';
-import { Copy, Edit2 } from 'lucide-react';
+import { Copy, Edit2, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { Section } from '../../core/Section';
 import { ThemeSelector } from './ThemeSelector';
@@ -60,7 +60,9 @@ export function ConfigSection() {
     <Section>
       <div className="flex flex-col justify-center items-center gap-4 w-full max-w-full">
         {error && (
-          <div className="bg-red-100 text-red-800 p-2 rounded-lg w-full">{error}</div>
+          <div className="bg-red-100 text-red-800 p-2 rounded-lg w-full">
+            {error}
+          </div>
         )}
         <Button
           variant="secondary"
@@ -72,18 +74,34 @@ export function ConfigSection() {
           className="text-xs sm:text-sm w-full max-w-[200px]"
         >
           <Copy className="h-5 w-5 flex-shrink-0" />
-          <span className="overflow-hidden text-ellipsis">Copy Column Names</span>
+          <span className="overflow-hidden text-ellipsis">
+            Copy Column Names
+          </span>
         </Button>
-        
+
         {/* Self-contained match data fetcher button */}
-        <MatchDataFetcher 
+        <MatchDataFetcher
           onError={setError}
           className="text-xs sm:text-sm w-full max-w-[200px]"
         />
-        
+
+        <Button
+          variant="secondary"
+          onClick={() => {
+            localStorage.removeItem('app_version');
+            window.location.reload();
+          }}
+          className="text-xs sm:text-sm w-full max-w-[200px]"
+        >
+          <RotateCcw className="h-5 w-5 flex-shrink-0" />
+          <span className="overflow-hidden text-ellipsis">
+            Replay Introduction
+          </span>
+        </Button>
+
         <Sheet open={showEditor} onOpenChange={setShowEditor}>
           <SheetTrigger asChild>
-            <Button 
+            <Button
               variant="secondary"
               className="text-xs sm:text-sm w-full max-w-[200px]"
             >

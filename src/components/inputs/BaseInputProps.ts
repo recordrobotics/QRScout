@@ -159,10 +159,7 @@ export const actionTrackerInputSchema = inputBaseSchema.extend({
 export const tbaTeamAndRobotInputSchema = inputBaseSchema.extend({
   type: z.literal('TBA-team-and-robot'),
   defaultValue: z
-    .object({
-      teamNumber: z.number(),
-      robotPosition: z.string(),
-    })
+    .number()
     .nullable()
     .default(null)
     .describe('The default team and robot position'),

@@ -317,6 +317,18 @@
                     "defaultValue": "",
                     "min": 0,
                     "max": 100
+                },
+                {
+                    "title": "Intake Effectiveness",
+                    "description": "1 meaning single width and jams often, 5 meaning full width capable of >=30bps",
+                    "type": "range",
+                    "required": false,
+                    "code": "intakeEff",
+                    "formResetBehavior": "reset",
+                    "defaultValue": 1,
+                    "min": 1,
+                    "max": 5,
+                    "step": 1
                 }
             ]
         }

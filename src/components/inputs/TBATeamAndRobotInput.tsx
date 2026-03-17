@@ -1,3 +1,11 @@
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useEvent } from '@/hooks';
 import {
   getFieldValue,
@@ -8,19 +16,6 @@ import {
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { TBATeamAndRobotInputData } from './BaseInputProps';
 import { ConfigurableInputProps } from './ConfigurableInput';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-
-interface TBATeamAndRobotData {
-  teamNumber: number;
-  robotPosition: string;
-}
 
 export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
   const data = useQRScoutState(
@@ -36,7 +31,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
     return <div>Invalid input</div>;
   }
 
-  const [value, setValue] = React.useState<TBATeamAndRobotData | null>(
+  const [value, setValue] = React.useState<number | null>(
     data.defaultValue || null,
   );
 
@@ -111,11 +106,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
   }, [value, props.code]);
 
   const handleSelectChange = useCallback((selectedValue: string) => {
-    const [teamNumber, robotPosition] = selectedValue.split('|');
-    setValue({
-      teamNumber: parseInt(teamNumber),
-      robotPosition,
-    });
+    setValue(parseInt(selectedValue));
   }, []);
 
   // Use a dropdown select if we have team options, otherwise use a regular number input
@@ -124,7 +115,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
       <Select
         name={data.title}
         onValueChange={handleSelectChange}
-        value={value ? `${value.teamNumber}|${value.robotPosition}` : ''}
+        value={value ? value.toString() : ''}
       >
         <SelectTrigger>
           <SelectValue placeholder="Select a team" />
@@ -133,7 +124,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
           {teamOptions.map(team => (
             <SelectItem
               key={`${team.teamNumber}|${team.robotPosition}`}
-              value={`${team.teamNumber}|${team.robotPosition}`}
+              value={team.teamNumber.toString()}
             >
               Team {team.teamNumber} ({team.alliance} {team.position})
             </SelectItem>
@@ -147,7 +138,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
   return (
     <Input
       type="number"
-      value={value?.teamNumber || ''}
+      value={value || ''}
       id={data.title}
       onChange={e => {
         const parsed = Number(e.target.value);
@@ -158,10 +149,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
         if (isNaN(parsed)) {
           return;
         }
-        setValue({
-          teamNumber: parsed,
-          robotPosition: '',
-        });
+        setValue(parsed);
       }}
       placeholder="Enter team number"
     />

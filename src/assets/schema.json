@@ -33,10 +33,7 @@
           "description": "Code of the form field to get this value from"
         }
       },
-      "required": [
-        "show",
-        "codeValue"
-      ],
+      "required": ["show", "codeValue"],
       "additionalProperties": false,
       "description": "Optional floating text box at the tob of the screen to show things like the team number. May be useful on small screens"
     },
@@ -156,10 +153,7 @@
           "$ref": "#/properties/theme/properties/light"
         }
       },
-      "required": [
-        "light",
-        "dark"
-      ],
+      "required": ["light", "dark"],
       "additionalProperties": false,
       "default": {
         "light": {
@@ -259,11 +253,7 @@
                     },
                     "formResetBehavior": {
                       "type": "string",
-                      "enum": [
-                        "reset",
-                        "preserve",
-                        "increment"
-                      ],
+                      "enum": ["reset", "preserve", "increment"],
                       "default": "reset",
                       "description": "The behavior of this input when the form is reset"
                     },
@@ -286,12 +276,7 @@
                       "default": 1
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -333,12 +318,7 @@
                       "description": "The maximum length of the string"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -380,12 +360,7 @@
                       "description": "The maximum value"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -426,12 +401,7 @@
                       "description": "The choices"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -474,12 +444,7 @@
                       "description": "The choices"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -526,12 +491,7 @@
                       "default": 1
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -565,12 +525,7 @@
                       "description": "The default value"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -605,20 +560,12 @@
                     },
                     "outputType": {
                       "type": "string",
-                      "enum": [
-                        "average",
-                        "list"
-                      ],
+                      "enum": ["average", "list"],
                       "default": "average",
                       "description": "The type of output to display in the scouting form"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -664,12 +611,7 @@
                       "description": "The alt text for the image"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -704,10 +646,7 @@
                     },
                     "mode": {
                       "type": "string",
-                      "enum": [
-                        "tap",
-                        "hold"
-                      ],
+                      "enum": ["tap", "hold"],
                       "default": "hold",
                       "description": "Recording mode: 'tap' records instant timestamps on click, 'hold' records duration while button is pressed (default: 'hold')"
                     },
@@ -729,10 +668,7 @@
                             "description": "Optional Lucide icon name (e.g., \"fuel\", \"target\"). See https://lucide.dev/icons"
                           }
                         },
-                        "required": [
-                          "label",
-                          "code"
-                        ],
+                        "required": ["label", "code"],
                         "additionalProperties": false
                       },
                       "minItems": 1,
@@ -743,13 +679,7 @@
                       "description": "Expected duration in seconds (for UI reference, e.g., 15 for auto, 135 for teleop)"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code",
-                    "actions"
-                  ],
+                  "required": ["title", "type", "required", "code", "actions"],
                   "additionalProperties": false
                 },
                 {
@@ -780,20 +710,7 @@
                     "defaultValue": {
                       "anyOf": [
                         {
-                          "type": "object",
-                          "properties": {
-                            "teamNumber": {
-                              "type": "number"
-                            },
-                            "robotPosition": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "teamNumber",
-                            "robotPosition"
-                          ],
-                          "additionalProperties": false
+                          "type": "number"
                         },
                         {
                           "type": "null"
@@ -803,12 +720,7 @@
                       "description": "The default team and robot position"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 },
                 {
@@ -850,22 +762,14 @@
                       "description": "The maximum value"
                     }
                   },
-                  "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "code"
-                  ],
+                  "required": ["title", "type", "required", "code"],
                   "additionalProperties": false
                 }
               ]
             }
           }
         },
-        "required": [
-          "name",
-          "fields"
-        ],
+        "required": ["name", "fields"],
         "additionalProperties": false
       }
     },
