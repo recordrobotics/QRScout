@@ -10,6 +10,7 @@ import { useQRScoutState } from './store/store';
 import { StatsigProvider, useClientAsyncInit } from '@statsig/react-bindings';
 import { runStatsigAutoCapture } from '@statsig/web-analytics';
 import { FloatingFormValue } from './components/FloatingFormValue';
+import { IntroductionDialog } from './components/IntroductionDialog';
 
 export function App() {
   const { teamNumber, pageTitle } = useQRScoutState(state => ({
@@ -38,6 +39,7 @@ export function App() {
   const appContent = (
     <ThemeProvider>
       <div className="min-h-screen py-2">
+        <IntroductionDialog />
         <Header />
         <main className="flex flex-1 flex-col items-center justify-center px-4 text-center">
           <h1 className="font-sans text-6xl font-bold">
