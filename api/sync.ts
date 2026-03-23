@@ -3,6 +3,8 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 // Ensure to add `.env` usage for the credentials or standard template setup.
 // Using standard Vercel environment variables. Next.js/Vercel handles `process.env.*` automatically.
 
+// Update just trying to trigger Vercel redeployment
+
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
