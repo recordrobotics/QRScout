@@ -2,6 +2,7 @@ import { Copy, QrCode } from 'lucide-react';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useCallback, useMemo, useRef } from 'react';
 import { getFieldValue, useQRScoutState } from '../../store/store';
+import { queueMatchForSync, MatchDataPayload } from '../../util/idb';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -42,13 +43,36 @@ export function QRModal(props: QRModalProps) {
     });
   }, [canvasRef]);
 
+  const handleCommit = useCallback(async () => {
+    canvasBlob();
+
+    const teamNumberVal = getFieldValue('robot');
+    const matchNumberVal = getFieldValue('matchNumber');
+    const scouterVal = getFieldValue('scouter');
+
+    const payload: Record<string, any> = {};
+    fieldValues.forEach(f => {
+      payload[f.code] = f.value;
+    });
+
+    const matchData: MatchDataPayload = {
+      teamNumber: typeof teamNumberVal === 'number' ? teamNumberVal : 0,
+      matchNumber: typeof matchNumberVal === 'number' ? matchNumberVal : 0,
+      scouter: typeof scouterVal === 'string' ? scouterVal : '',
+      timestamp: Date.now(),
+      payload,
+    };
+
+    await queueMatchForSync(matchData);
+  }, [canvasBlob, fieldValues]);
+
   //Two seperate values are required- qrCodePreview is what is shown to the user beneath the QR code, qrCodeData is the actual data.
 
   return (
     <><QRCodeCanvas ref={canvasRef} size={256} value={qrCodeData} marginSize={4} style={{ display: 'none' }} />
       <Dialog>
         <DialogTrigger asChild>
-          <Button disabled={props.disabled} onClick={canvasBlob}>
+          <Button disabled={props.disabled} onClick={handleCommit}>
             <QrCode className="size-5" />
             Commit
           </Button>

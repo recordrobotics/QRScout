@@ -14,6 +14,7 @@ import { Copy, Edit2, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { Section } from '../../core/Section';
 import { ThemeSelector } from './ThemeSelector';
+import { SyncButton } from './SyncButton';
 
 /**
  * Extracts a short phase name from a field title or section name.
@@ -84,6 +85,8 @@ export function ConfigSection() {
           onError={setError}
           className="text-xs sm:text-sm w-full max-w-[200px]"
         />
+
+        <SyncButton />
 
         <Button
           variant="secondary"
