@@ -59,26 +59,48 @@ export default async function handler(req: any, res: any) {
     // Map the data exactly to the Google Sheet headers
     const rowsToAdd = matches.map(m => {
       return {
-        // The left side MUST exactly match the text in Row 3 of your sheet.
-        // The right side is the data coming from your app.
-        'Scouter Initials': m.scouter,
-        'Match Number': m.matchNumber,
-        'Team and Robot': m.teamNumber,
-        'No Show': m.noShow,
-        // autoClimb: m.autoClimbed || '',
-        'Fuel Scored (Auto)': m.autoFuelScored,
-        'Alliance won auto?': m.allianceWonAuto,
-        'Mechanical Issue?': m.mechIssue,
-        'Died?': m.died,
-        'Faffing & Stuck in Actions (count)': m.tripped,
-        'Fuel Scored (Teleop)': m.teleopFuelScored,
-        'Bump / Trench': m.crossAbility,
-        'Scored How?': m.scoredHow,
-        'Defense in Actions (count)': m.robotDefended,
-        'Defense Skill': m.defSkill,
-        'Yellow/Red Card': m.yc,
-        'Scoring Effectiveness': m.intakeEff,
-        // Comment: m.co || '',
+        // Setup & Auto
+        'Scouter Initials': m.scouter || '',
+        'Match Number': m.matchNumber || '',
+        'Team and Robot': m.teamNumber || '',
+        'Starting Position': m.startingPosition || '',
+        'No Show': m.noShow || '', // Assuming this is a checkbox
+        'Fuel Scored (Auto)': m.autoFuelScored || '',
+        'Where Collected Fuel': m.whereCollectedFuel || '',
+        'Other Auto Actions': m.otherAutoActions || '',
+        'Robot Stuck or Astop in Auto?': m.stuckInAuto || '',
+        'Climbed Auto': m.autoClimbed || '',
+        'Alliance won auto?': m.allianceWonAuto || '',
+
+        // Teleop
+        'Fuel Scored (Teleop)': m.teleopFuelScored || '',
+        'Bump / Trench': m.crossAbility || '',
+        'Defended by opponent?': m.defendedByOpponent || '',
+        'Fuel Fed (Herded & Passed)': m.fuelFed || '',
+        'Opposing Zone Actions': m.opposingZoneActions || '',
+
+        // Timestamps & Counts
+        'Faffing & Stuck in Actions (count)': m.tripped || '',
+        'Faffing & Stuck in Actions (timestamps)': m.faffingTimestamps || '',
+        'Defense in Actions (count)': m.robotDefended || '',
+        'Defense in Actions (timestamps)': m.defenseTimestamps || '',
+
+        // Endgame & Post Match
+        'Climbed': m.climbed || '',
+        'Where Climbed': m.whereClimbed || '',
+        'Mechanical Issue?': m.mechIssue || '', // Checkbox? Use false instead of ''
+        'Died?': m.died || '', // Checkbox? Use false instead of ''
+        'Tipped/Fell Over': m.tipped || '', // Checkbox? Use false instead of ''
+
+        // Ratings & Skills
+        'Scoring Effectiveness': m.intakeEff || '',
+        'Scored How?': m.scoredHow || '',
+        'Scoring Location': m.scoringLocation || '',
+        'Feeding/Passing Skill': m.feedingSkill || '',
+        'Passed How?': m.passedHow || '',
+        'Defense Skill': m.defSkill || '',
+        'Yellow/Red Card': m.yc || '',
+        'Comments': m.co || '',
       };
     });
 
