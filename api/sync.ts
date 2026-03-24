@@ -64,27 +64,29 @@ export default async function handler(req: any, res: any) {
         'Scouter Initials': m.scouter,
         'Match Number': m.matchNumber,
         'Team and Robot': m.teamNumber,
-        'No Show': m.noShow || '',
+        'No Show': m.noShow,
         // autoClimb: m.autoClimbed || '',
-        'Fuel Scored (Auto)': m.autoFuelScored || '',
-        'Alliance won auto?': m.allianceWonAuto || '',
-        'Mechanical Issue?': m.mechIssue || '',
-        'Died?': m.died || '',
-        'Faffing & Stuck in Actions (count)': m.tripped || '',
-        'Fuel Scored (Teleop)': m.teleopFuelScored || '',
-        'Bump / Trench': m.crossAbility || '',
-        'Scored How?': m.scoredHow || '',
-        'Defense in Actions (count)': m.robotDefended || '',
-        'Defense Skill': m.defSkill || '',
-        'Yellow/Red Card': m.yc || '',
-        'Scoring Effectiveness': m.intakeEff || '',
+        'Fuel Scored (Auto)': m.autoFuelScored,
+        'Alliance won auto?': m.allianceWonAuto,
+        'Mechanical Issue?': m.mechIssue,
+        'Died?': m.died,
+        'Faffing & Stuck in Actions (count)': m.tripped,
+        'Fuel Scored (Teleop)': m.teleopFuelScored,
+        'Bump / Trench': m.crossAbility,
+        'Scored How?': m.scoredHow,
+        'Defense in Actions (count)': m.robotDefended,
+        'Defense Skill': m.defSkill,
+        'Yellow/Red Card': m.yc,
+        'Scoring Effectiveness': m.intakeEff,
         // Comment: m.co || '',
       };
     });
 
     // Push the data directly. We completely skip trying to rewrite the headers.
     await sheet.addRows(rowsToAdd);
-
+    console.log(
+      'Successfully synced ' + rowsToAdd + ' matches to Google Sheets.',
+    );
     return res.status(200).json({ success: true, count: rowsToAdd.length });
   } catch (error: any) {
     console.error('Sheets Sync Error:', error);
