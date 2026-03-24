@@ -59,48 +59,36 @@ export default async function handler(req: any, res: any) {
     // Map the data exactly to the Google Sheet headers
     const rowsToAdd = matches.map(m => {
       return {
-        // Setup & Auto
+        // Setup & Prematch
         'Scouter Initials': m.scouter || '',
         'Match Number': m.matchNumber || '',
-        'Team and Robot': m.teamNumber || '',
-        'Starting Position': m.startingPosition || '',
-        'No Show': m.noShow || '', // Assuming this is a checkbox
-        'Fuel Scored (Auto)': m.autoFuelScored || '',
-        'Where Collected Fuel': m.whereCollectedFuel || '',
-        'Other Auto Actions': m.otherAutoActions || '',
-        'Robot Stuck or Astop in Auto?': m.stuckInAuto || '',
+        'Team and Robot': m.robot || m.teamNumber || '', // config.json says "robot"
+        'No Show': m.noShow || false,
+
+        // Autonomous
         'Climbed Auto': m.autoClimbed || '',
-        'Alliance won auto?': m.allianceWonAuto || '',
+        'Where Climbed Auto': m.autoClimbPos || '',
+        'Fuel Scored (Auto)': m.autoFuelScored || 0, // It is a counter, so fallback to 0
 
         // Teleop
-        'Fuel Scored (Teleop)': m.teleopFuelScored || '',
+        'Alliance won auto?': m.allianceWonAuto || false,
+        'Mechanical Issue?': m.mechIssue || false,
+        'Died?': m.died || false,
+        'Tipped/Fell Over': m.tipped || false,
+        'Fuel Scored (Teleop)': m.teleopFuelScored || 0, // Counter fallback to 0
         'Bump / Trench': m.crossAbility || '',
-        'Defended by opponent?': m.defendedByOpponent || '',
-        'Fuel Fed (Herded & Passed)': m.fuelFed || '',
-        'Opposing Zone Actions': m.opposingZoneActions || '',
 
-        // Timestamps & Counts
-        'Faffing & Stuck in Actions (count)': m.tripped || '',
-        'Faffing & Stuck in Actions (timestamps)': m.faffingTimestamps || '',
-        'Defense in Actions (count)': m.robotDefended || '',
-        'Defense in Actions (timestamps)': m.defenseTimestamps || '',
+        // Endgame
+        Climbed: m.climbed || '',
+        'Where Climbed': m.climbPos || '',
 
-        // Endgame & Post Match
-        'Climbed': m.climbed || '',
-        'Where Climbed': m.whereClimbed || '',
-        'Mechanical Issue?': m.mechIssue || '', // Checkbox? Use false instead of ''
-        'Died?': m.died || '', // Checkbox? Use false instead of ''
-        'Tipped/Fell Over': m.tipped || '', // Checkbox? Use false instead of ''
-
-        // Ratings & Skills
-        'Scoring Effectiveness': m.intakeEff || '',
+        // Postmatch
         'Scored How?': m.scoredHow || '',
-        'Scoring Location': m.scoringLocation || '',
-        'Feeding/Passing Skill': m.feedingSkill || '',
-        'Passed How?': m.passedHow || '',
-        'Defense Skill': m.defSkill || '',
+        'Defended during match?': m.robotDefended || false, // Matches config description
+        'Defense Skill': m.defSkill || 0,
+        'Intake Effectiveness': m.intakeEff || 1, // Default from your config
         'Yellow/Red Card': m.yc || '',
-        'Comments': m.co || '',
+        Comments: m.co || '',
       };
     });
 
