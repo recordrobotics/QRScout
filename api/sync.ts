@@ -56,34 +56,33 @@ export default async function handler(req: any, res: any) {
     // Let's flatten the payload using its keys.
 
     // We should make sure the headers contain all the keys.
+    // Map the data exactly to the Google Sheet headers
     const rowsToAdd = matches.map(m => {
-      // m.payload already contains all the form data mapped by `code`.
-      // We also inject match metadata.
       return {
-        ...m.payload,
-        teamNumber: m.teamNumber,
-        matchNumber: m.matchNumber,
-        scouter: m.scouter,
-        timestamp: new Date(m.timestamp).toISOString(),
+        // The left side MUST exactly match the text in Row 3 of your sheet.
+        // The right side is the data coming from your app.
+        'Scouter Initials': m.scouter,
+        'Match Number': m.matchNumber,
+        'Team and Robot': m.teamNumber,
+        'No Show': m.noShow || '',
+        // autoClimb: m.autoClimbed || '',
+        'Fuel Scored (Auto)': m.autoFuelScored || '',
+        'Alliance won auto?': m.allianceWonAuto || '',
+        'Mechanical Issue?': m.mechIssue || '',
+        'Died?': m.died || '',
+        'Faffing & Stuck in Actions (count)': m.tripped || '',
+        'Fuel Scored (Teleop)': m.teleopFuelScored || '',
+        'Bump / Trench': m.crossAbility || '',
+        'Scored How?': m.scoredHow || '',
+        'Defense in Actions (count)': m.robotDefended || '',
+        'Defense Skill': m.defSkill || '',
+        'Yellow/Red Card': m.yc || '',
+        'Scoring Effectiveness': m.intakeEff || '',
+        // Comment: m.co || '',
       };
     });
 
-    // Check if we need to update headers
-    const headersNeeded = new Set<string>();
-    rowsToAdd.forEach(row => {
-      Object.keys(row).forEach(k => headersNeeded.add(k));
-    });
-
-    const existingHeaders = [...sheet.headerValues];
-    const missingHeaders = Array.from(headersNeeded).filter(
-      h => !existingHeaders.includes(h),
-    );
-
-    if (missingHeaders.length > 0) {
-      await sheet.setHeaderRow([...existingHeaders, ...missingHeaders]);
-    }
-
-    // Batch insertion
+    // Push the data directly. We completely skip trying to rewrite the headers.
     await sheet.addRows(rowsToAdd);
 
     return res.status(200).json({ success: true, count: rowsToAdd.length });
