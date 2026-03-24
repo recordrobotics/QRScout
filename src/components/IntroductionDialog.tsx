@@ -46,7 +46,7 @@ export function IntroductionDialog() {
     <Dialog open={isOpen} onOpenChange={handleDismiss}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-rhr-ns text-primary">
+          <DialogTitle className="text-2xl font-record-ns text-primary">
             {mode === 'intro' ? 'Welcome to QRScout!' : 'QRScout Updated!'}
           </DialogTitle>
           <DialogDescription className="text-base pt-4">

@@ -32,7 +32,7 @@ export function ResetButton(props: ResetButtonProps) {
       </Button>
       <Modal show={showModal} onDismiss={onCancel}>
         <div className="p-4">
-          <h2 className="font-semibold text-3xl text-primary text-center font-rhr-ns tracking-wider">Confirm Reset</h2>
+          <h2 className="font-semibold text-3xl text-primary text-center font-record-ns tracking-wider">Confirm Reset</h2>
           <p>Are you sure you want to reset the form?</p>
           <div className="flex justify-end gap-2 mt-4">
             <Button variant="outline" onClick={onCancel} className="w-full sm:w-auto">

@@ -4,18 +4,18 @@ module.exports = {
   theme: {
   	extend: {
   		fontFamily: {
-  			rhr: [
+  			record: [
   				'SF Sports Night',
   				'sans-serif'
   			],
-  			'rhr-ns': [
+  			'record-ns': [
   				'SF Sports Night NS',
   				'sans-serif'
   			]
   		},
   		colors: {
   			red: {
-  				rhr: '#ef3340'
+  				record: '#ef3340'
   			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
