@@ -11,8 +11,10 @@ import { StatsigProvider, useClientAsyncInit } from '@statsig/react-bindings';
 import { runStatsigAutoCapture } from '@statsig/web-analytics';
 import { FloatingFormValue } from './components/FloatingFormValue';
 import { IntroductionDialog } from './components/IntroductionDialog';
+import { useUpdateCheck } from './hooks/useUpdateCheck';
 
 export function App() {
+  useUpdateCheck();
   const { teamNumber, pageTitle } = useQRScoutState(state => ({
     teamNumber: state.formData.teamNumber,
     pageTitle: state.formData.page_title,

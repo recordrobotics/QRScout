@@ -82,7 +82,7 @@ const rowsToAdd = matches.map(m => {
         'Tipped/Fell Over': p.tipped || false,
         'Fuel Scored (Teleop)': p.teleopFuelScored || 0,
         'Bump / Trench': p.crossAbility || '',
-        'Fuel Fed (Herded & Passed)' : p.feedPass || '',
+        'Fuel Fed (Herded & Passed)' : p.feedPass || false,
         // Endgame
         'Climbed': p.climbed || '',
         'Where Climbed': p.climbPos || '',
