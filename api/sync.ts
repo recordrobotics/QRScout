@@ -82,7 +82,7 @@ const rowsToAdd = matches.map(m => {
         'Tipped/Fell Over': p.tipped || false,
         'Fuel Scored (Teleop)': p.teleopFuelScored || 0,
         'Bump / Trench': p.crossAbility || '',
-
+        'Fuel Fed (Herded & Passed)' : p.feedPass || '',
         // Endgame
         'Climbed': p.climbed || '',
         'Where Climbed': p.climbPos || '',
@@ -91,7 +91,7 @@ const rowsToAdd = matches.map(m => {
         'Scored How?': p.scoredHow || '',
         'Defended during match?': p.robotDefended || false,
         'Defense Skill': p.defSkill || 0,
-        'Intake Effectiveness': p.intakeEff || 1,
+        'Scoring Effectiveness': p.intakeEff || 1,
         'Yellow/Red Card': p.yc || '',
         'Comments': p.co || '',
       };

@@ -212,6 +212,15 @@
             "Trench": "Trench",
             "Bump": "Bump"
           }
+        },
+        {
+          "title": "Feeding/Passing?",
+          "type": "boolean",
+          "required": false,
+          "code": "feedPass",
+          "description": "Did the robot feed or pass fuel to another robot?",
+          "formResetBehavior": "reset",
+          "defaultValue": false
         }
       ]
     },
