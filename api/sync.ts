@@ -57,38 +57,43 @@ export default async function handler(req: any, res: any) {
 
     // We should make sure the headers contain all the keys.
     // Map the data exactly to the Google Sheet headers
-    const rowsToAdd = matches.map(m => {
+const rowsToAdd = matches.map(m => {
+      // This opens the payload folder where the actual answers are hiding
+      const p = m.payload || {};
+
       return {
-        // Setup & Prematch
+        // These three live at the top level
         'Scouter Initials': m.scouter || '',
         'Match Number': m.matchNumber || '',
-        'Team and Robot': m.robot || m.teamNumber || '', // config.json says "robot"
-        'No Show': m.noShow || false,
+        'Team and Robot': m.teamNumber || '',
+
+        // ALL of these use 'p.' and exactly match the "code" from your config.json
+        'No Show': p.noShow || false,
 
         // Autonomous
-        'Climbed Auto': m.autoClimbed || '',
-        'Where Climbed Auto': m.autoClimbPos || '',
-        'Fuel Scored (Auto)': m.autoFuelScored || 0, // It is a counter, so fallback to 0
+        'Climbed Auto': p.autoClimbed || '',
+        'Where Climbed Auto': p.autoClimbPos || '',
+        'Fuel Scored (Auto)': p.autoFuelScored || 0,
 
         // Teleop
-        'Alliance won auto?': m.allianceWonAuto || false,
-        'Mechanical Issue?': m.mechIssue || false,
-        'Died?': m.died || false,
-        'Tipped/Fell Over': m.tipped || false,
-        'Fuel Scored (Teleop)': m.teleopFuelScored || 0, // Counter fallback to 0
-        'Bump / Trench': m.crossAbility || '',
+        'Alliance won auto?': p.allianceWonAuto || false,
+        'Mechanical Issue?': p.mechIssue || false,
+        'Died?': p.died || false,
+        'Tipped/Fell Over': p.tipped || false,
+        'Fuel Scored (Teleop)': p.teleopFuelScored || 0,
+        'Bump / Trench': p.crossAbility || '',
 
         // Endgame
-        Climbed: m.climbed || '',
-        'Where Climbed': m.climbPos || '',
+        'Climbed': p.climbed || '',
+        'Where Climbed': p.climbPos || '',
 
         // Postmatch
-        'Scored How?': m.scoredHow || '',
-        'Defended during match?': m.robotDefended || false, // Matches config description
-        'Defense Skill': m.defSkill || 0,
-        'Intake Effectiveness': m.intakeEff || 1, // Default from your config
-        'Yellow/Red Card': m.yc || '',
-        Comments: m.co || '',
+        'Scored How?': p.scoredHow || '',
+        'Defended during match?': p.robotDefended || false,
+        'Defense Skill': p.defSkill || 0,
+        'Intake Effectiveness': p.intakeEff || 1,
+        'Yellow/Red Card': p.yc || '',
+        'Comments': p.co || '',
       };
     });
 
