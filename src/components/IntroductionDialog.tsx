@@ -58,7 +58,10 @@ export function IntroductionDialog() {
                 </p>
                 <p>
                   As you track matches, your data is converted directly into a
-                  secure QR code. This code can be scanned instantly into your
+                  secure QR code OR synced directly to the cloud.
+                </p>
+                <p>
+                  This data can be managed instantly inside your
                   team's master spreadsheet—no spotty stadium Wi-Fi required!
                 </p>
                 <p className="font-semibold text-secondary-foreground dark:text-neutral-300">
@@ -73,16 +76,20 @@ export function IntroductionDialog() {
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    Added a brand new Queued Counter feature for rapid fuel
-                    scoring.
-                  </li>
-                  <li>Keyboard support built-in for the fastest data entry.</li>
-                  <li>
-                    Dynamic layout updates combining Teleop and Postmatch data
-                    efficiently.
+                    Added <strong>Cloud Sync</strong> to instantly upload your 
+                    offline match queue to Google Sheets.
                   </li>
                   <li>
-                    Overhauled the entire UI for a cleaner, centered layout.
+                    Robust <strong>Offline Queuing</strong> utilizing IndexedDB 
+                    for data protection during connectivity loss.
+                  </li>
+                  <li>
+                    Enhanced UI with a dedicated <strong>Sync Button</strong> 
+                    and real-time status indicators.
+                  </li>
+                  <li>
+                    Updated <strong>2026 Season Config</strong> with optimized 
+                    field layout for the latest challenge.
                   </li>
                 </ul>
                 <p className="font-semibold text-secondary-foreground">
