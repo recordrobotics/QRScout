@@ -42,11 +42,15 @@ export default async function handler(req: any, res: any) {
     await doc.loadInfo();
 
     // We assume the target sheet is "Matches" or the first sheet
-    let sheet = doc.sheetsByTitle['Matches'];
+    let sheet = doc.sheetsByTitle['Data (Entry & Sorting)'];
     if (!sheet) {
-      sheet = doc.sheetsByIndex[0]; // fallback
+      sheet = doc.sheetsByIndex[1]; // fallback
     }
-
+    try {
+      await sheet.loadHeaderRow(3);
+    } catch (error) {
+      console.log('Headers missing on row 3.');
+    }
     // Convert the payload structure from local DB to flat array that spreadsheet expects
     // Assuming user wants to dump the flattened payload or we dump raw JSON if they haven't specified headers?
     // Let's flatten the payload using its keys.
