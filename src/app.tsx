@@ -10,7 +10,7 @@ import { useQRScoutState } from './store/store';
 import { StatsigProvider, useClientAsyncInit } from '@statsig/react-bindings';
 import { runStatsigAutoCapture } from '@statsig/web-analytics';
 import { FloatingFormValue } from './components/FloatingFormValue';
-import { IntroductionDialog } from './components/IntroductionDialog';
+import { IntroductionSection } from './components/IntroductionSection';
 import { useUpdateCheck } from './hooks/useUpdateCheck';
 
 export function App() {
@@ -41,7 +41,7 @@ export function App() {
   const appContent = (
     <ThemeProvider>
       <div className="min-h-screen py-2">
-        <IntroductionDialog />
+        {/* No longer at top - moved to end */}
         <Header />
         <main className="flex flex-1 flex-col items-center justify-center px-4 text-center">
           <h1 className="font-sans text-6xl font-bold">
@@ -55,6 +55,7 @@ export function App() {
               <ConfigSection />
             </div>
           </form>
+          <IntroductionSection />
         </main>
         <Footer />
       </div>

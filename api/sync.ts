@@ -57,15 +57,17 @@ export default async function handler(req: any, res: any) {
 
     // We should make sure the headers contain all the keys.
     const now = new Date();
-    const timeStr = now.toLocaleTimeString('en-US', {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      month: '2-digit',
+      day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true,
-      timeZone: 'America/New_York',
+      hourCycle: 'h23',
     });
-    // Convert "hh:mm AM/PM" to "AM/PM hh:mm"
-    const [time, ampm] = timeStr.split(' ');
-    const formattedTime = `${ampm} ${time}`;
+    const parts = formatter.formatToParts(now);
+    const getPart = (type: string) => parts.find(p => p.type === type)?.value;
+    const formattedTime = `${getPart('month')}/${getPart('day')} ${getPart('hour')}:${getPart('minute')}`;
 
     // Map the data exactly to the Google Sheet headers
     const rowsToAdd = matches.map((m: any, index: number) => {
