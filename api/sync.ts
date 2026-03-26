@@ -61,6 +61,7 @@ export default async function handler(req: any, res: any) {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true,
+      timeZone: 'America/New_York',
     });
     // Convert "hh:mm AM/PM" to "AM/PM hh:mm"
     const [time, ampm] = timeStr.split(' ');
