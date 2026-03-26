@@ -8,7 +8,7 @@ export function useUpdateCheck() {
 
     const checkUpdate = async () => {
       try {
-        const url = `${import.meta.env.BASE_URL}version.json`.replace(
+        const url = `${import.meta.env.BASE_URL}version.json?t=${Date.now()}`.replace(
           /\/+/g,
           '/',
         );

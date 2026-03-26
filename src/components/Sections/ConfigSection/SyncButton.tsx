@@ -55,6 +55,13 @@ export function SyncButton() {
     }
   };
 
+  const handleClear = async () => {
+    if (window.confirm('Are you sure you want to clear all stored match data? This cannot be undone.')) {
+      await clearQueuedMatches();
+      refreshQueue();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 w-full max-w-[200px]">
       <Button
@@ -73,6 +80,14 @@ export function SyncButton() {
           {error}
         </span>
       )}
+      <Button
+        variant="outline"
+        onClick={handleClear}
+        disabled={isSyncing || queueCount === 0}
+        className="text-xs sm:text-sm w-full text-destructive border-destructive hover:bg-destructive/10"
+      >
+        Clear Match Data
+      </Button>
     </div>
   );
 }

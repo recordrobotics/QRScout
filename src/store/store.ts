@@ -66,6 +66,7 @@ export interface QRScoutState {
   formData: Config;
   fieldValues: { code: string; value: any }[];
   showQR: boolean;
+  qrData?: string;
   matchData?: MatchData[];
 }
 
@@ -111,6 +112,14 @@ export function updateValue(code: string, data: any) {
       }
     }),
   );
+}
+
+export function setQRData(data: string, show: boolean = true) {
+  useQRScoutState.setState({ qrData: data, showQR: show });
+}
+
+export function hideQR() {
+  useQRScoutState.setState({ showQR: false });
 }
 
 export function getFieldValue(code: string) {

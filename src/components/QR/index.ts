@@ -1,3 +1,3 @@
-export * from './QRModal';
+export * from './QRDisplayBox';
 export * from './EventSelectionDialog';
 export * from './MatchDataFetcher';

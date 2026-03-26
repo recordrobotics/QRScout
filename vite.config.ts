@@ -13,6 +13,7 @@ export default defineConfig({
       manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff,woff2}'],
+        globIgnores: ['**/version.json'],
       },
     }),
   ],
