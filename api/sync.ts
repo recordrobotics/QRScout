@@ -72,9 +72,7 @@ export default async function handler(req: any, res: any) {
       const p = m.payload || {};
 
       return {
-        'Index (sort A-Z to return rows to initial ordering)': `${formattedTime} - ${String(
-          index + 1,
-        ).padStart(3, '0')}`,
+        'Index Time (sort A-Z to return rows to initial ordering)': `${formattedTime}`,
         // These three live at the top level
         'Scouter Initials': m.scouter || '',
         'Match Number': m.matchNumber || '',
@@ -95,7 +93,7 @@ export default async function handler(req: any, res: any) {
         'Tipped/Fell Over': p.tipped || false,
         'Fuel Scored (Teleop)': p.teleopFuelScored || 0,
         'Bump / Trench': p.crossAbility || '',
-        'Fuel Fed (Herded & Passed)' : p.feedPass || false,
+        'Fuel Fed (Herded & Passed)': p.feedPass || false,
         // Endgame
         'Climbed': p.climbed || '',
         'Where Climbed': p.climbPos || '',
