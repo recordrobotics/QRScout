@@ -7,7 +7,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "build": "tsc && vite build && node -e \"const fs = require('fs'); const version = { version: Date.now().toString() }; fs.writeFileSync('dist/version.json', JSON.stringify(version));\"",
+    "build": "tsc && vite build && node -e \"const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json')); const versionData = { version: pkg.version, buildTime: Date.now() }; fs.writeFileSync('dist/version.json', JSON.stringify(versionData));\"",
     "preview": "vite preview",
     "schema": "ts-node src/scripts/generateJsonSchema.ts src/assets/schema.json && cp src/assets/schema.json public/schema.json"
   },

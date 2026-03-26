@@ -56,12 +56,25 @@ export default async function handler(req: any, res: any) {
     // Let's flatten the payload using its keys.
 
     // We should make sure the headers contain all the keys.
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+    // Convert "hh:mm AM/PM" to "AM/PM hh:mm"
+    const [time, ampm] = timeStr.split(' ');
+    const formattedTime = `${ampm} ${time}`;
+
     // Map the data exactly to the Google Sheet headers
-const rowsToAdd = matches.map(m => {
+    const rowsToAdd = matches.map((m: any, index: number) => {
       // This opens the payload folder where the actual answers are hiding
       const p = m.payload || {};
 
       return {
+        'Index (sort A-Z to return rows to initial ordering)': `${formattedTime} - ${String(
+          index + 1,
+        ).padStart(3, '0')}`,
         // These three live at the top level
         'Scouter Initials': m.scouter || '',
         'Match Number': m.matchNumber || '',
@@ -100,7 +113,7 @@ const rowsToAdd = matches.map(m => {
     // Push the data directly. We completely skip trying to rewrite the headers.
     await sheet.addRows(rowsToAdd);
     console.log(
-      'Successfully synced ' + rowsToAdd + ' matches to Google Sheets.',
+      'Successfully synced ' + rowsToAdd.length + ' matches to Google Sheets.',
     );
     return res.status(200).json({ success: true, count: rowsToAdd.length });
   } catch (error: any) {
