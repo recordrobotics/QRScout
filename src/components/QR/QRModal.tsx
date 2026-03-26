@@ -1,7 +1,7 @@
 import { Copy, QrCode } from 'lucide-react';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useCallback, useMemo, useRef } from 'react';
-import { getFieldValue, useQRScoutState } from '../../store/store';
+import { getFieldValue, resetFields, useQRScoutState } from '../../store/store';
 import { queueMatchForSync, MatchDataPayload } from '../../util/idb';
 import { Button } from '../ui/button';
 import {
@@ -64,6 +64,7 @@ export function QRModal(props: QRModalProps) {
     };
 
     await queueMatchForSync(matchData);
+    resetFields();
   }, [canvasBlob, fieldValues]);
 
   //Two seperate values are required- qrCodePreview is what is shown to the user beneath the QR code, qrCodeData is the actual data.

@@ -1,6 +1,6 @@
 import { useEvent } from '@/hooks';
 import { inputSelector, updateValue, useQRScoutState } from '@/store/store';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Slider } from '../ui/slider';
 import { RangeInputData } from './BaseInputProps';
 import { ConfigurableInputProps } from './ConfigurableInput';
@@ -53,8 +53,19 @@ export default function RangeInput(props: ConfigurableInputProps) {
   }, []);
 
   useEffect(() => {
-    updateValue(props.code, value);
-  }, [value]);
+    if (props.code === 'defSkill' && value === 0) {
+      updateValue(props.code, 'Did not Defense');
+    } else {
+      updateValue(props.code, value);
+    }
+  }, [value, props.code]);
+
+  const displayValue = useMemo(() => {
+    if (props.code === 'defSkill') {
+      return value === 0 ? 'Did not Defense' : `Defense skill: ${value}`;
+    }
+    return value;
+  }, [value, props.code]);
 
   return (
     <div className="flex flex-col items-center gap-2 p-2">
@@ -65,7 +76,7 @@ export default function RangeInput(props: ConfigurableInputProps) {
             : 'text-secondary-foreground/50'
         }`}
       >
-        {value}
+        {displayValue}
       </span>
       <Slider
         className={`w-full py-2 px-1 ${isEnabled ? '' : 'opacity-50'}`}

@@ -85,10 +85,8 @@ export default async function handler(req: any, res: any) {
         'No Show': p.noShow || false,
 
         // Autonomous
-        'Climbed Auto': p.autoClimbed || '',
-        'Where Climbed Auto': p.autoClimbPos || '',
         'Fuel Scored (Auto)': p.autoFuelScored || 0,
-
+        'Climbed Auto': p.autoClimb || '',
         // Teleop
         'Alliance won auto?': p.allianceWonAuto || false,
         'Mechanical Issue?': p.mechIssue || false,
@@ -98,12 +96,10 @@ export default async function handler(req: any, res: any) {
         'Bump / Trench': p.crossAbility || '',
         'Fuel Fed (Herded & Passed)': p.feedPass || false,
         // Endgame
-        'Climbed': p.climbed || '',
-        'Where Climbed': p.climbPos || '',
+        'Climbed': p.climb || '',
 
         // Postmatch
         'Scored How?': p.scoredHow || '',
-        'Defended during match?': p.robotDefended || false,
         'Defense Skill': p.defSkill || 0,
         'Scoring Effectiveness': p.intakeEff || 1,
         'Yellow/Red Card': p.yc || '',

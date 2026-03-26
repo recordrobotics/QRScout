@@ -108,35 +108,6 @@
       "name": "Autonomous",
       "fields": [
         {
-          "title": "Climbed",
-          "description": "Did the robot climb during autonomous?",
-          "type": "select",
-          "required": false,
-          "code": "autoClimbed",
-          "formResetBehavior": "reset",
-          "defaultValue": "No",
-          "choices": {
-            "No": "No Climb",
-            "Yes": "Climb",
-            "F": "Failed Climb"
-          }
-        },
-        {
-          "title": "Where Climbed",
-          "description": "Where on the tower did the robot climb in autonomous?",
-          "type": "select",
-          "required": false,
-          "code": "autoClimbPos",
-          "formResetBehavior": "reset",
-          "defaultValue": "No",
-          "choices": {
-            "No": "No Climb",
-            "Out": "Output Side",
-            "Mid": "Middle",
-            "Dep": "Depot Side"
-          }
-        },
-        {
           "title": "fuel scored",
           "description": "The number of fuel scored in autonomous.",
           "type": "queued-counter",
@@ -146,6 +117,21 @@
           "defaultValue": 0,
           "min": 0,
           "step": 1
+        },
+        {
+          "title": "Climb",
+          "description": "Did the robot climb? (Outpost, Middle, Depot)",
+          "type": "select",
+          "required": true,
+          "code": "autoClimb",
+          "formResetBehavior": "reset",
+          "defaultValue": "No",
+          "choices": {
+            "No": "No",
+            "Out": "Outpost",
+            "Mid": "Middle",
+            "Dep": "Depot"
+          }
         }
       ]
     },
@@ -208,9 +194,8 @@
           "formResetBehavior": "reset",
           "defaultValue": "None",
           "choices": {
-            "None": "None",
-            "Trench": "Trench",
-            "Bump": "Bump"
+            "None": "No Trench",
+            "Trench": "Trench"
           }
         },
         {
@@ -228,34 +213,18 @@
       "name": "Endgame",
       "fields": [
         {
-          "title": "Climbed",
-          "description": "The level the robot climbed during endgame.",
+          "title": "Climb",
+          "description": "Did the robot climb? (Outpost, Middle, Depot)",
           "type": "select",
           "required": true,
-          "code": "climbed",
+          "code": "climb",
           "formResetBehavior": "reset",
           "defaultValue": "No",
           "choices": {
-            "No": "No Climb",
-            "L1": "Level 1",
-            "L2": "Level 2",
-            "L3": "Level 3",
-            "F": "Failed Climb"
-          }
-        },
-        {
-          "title": "Where Climbed",
-          "description": "Where on the tower did the robot climb?",
-          "type": "select",
-          "required": false,
-          "code": "climbPos",
-          "formResetBehavior": "reset",
-          "defaultValue": "No",
-          "choices": {
-            "No": "No Climb",
-            "Out": "Output Side",
+            "No": "No",
+            "Out": "Outpost",
             "Mid": "Middle",
-            "Dep": "Depot Side"
+            "Dep": "Depot"
           }
         }
       ]
@@ -274,19 +243,9 @@
           "choices": {
             "blank": "(blank)",
             "driving": "While driving",
-            "stationary": "While stationary",
-            "both": "Both",
+            "stationary": "Not Driving",
             "none": "No scoring"
           }
-        },
-        {
-          "title": "Defended during match?",
-          "description": "Did the robot play defense during the match?",
-          "type": "boolean",
-          "required": false,
-          "code": "robotDefended",
-          "formResetBehavior": "reset",
-          "defaultValue": false
         },
         {
           "title": "Defense Skill",
@@ -298,11 +257,7 @@
           "defaultValue": 0,
           "min": 0,
           "max": 5,
-          "step": 1,
-          "dependsOn": {
-            "code": "robotDefended",
-            "value": true
-          }
+          "step": 1
         },
         {
           "title": "Intake Effectiveness",
