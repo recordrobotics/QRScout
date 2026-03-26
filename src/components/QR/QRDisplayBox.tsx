@@ -1,21 +1,17 @@
 import { Copy, X } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useCallback } from 'react';
-import { hideQR, useQRScoutState, getFieldValue } from '../../store/store';
+import { hideQR, useQRScoutState } from '../../store/store';
 import { Button } from '../ui/button';
 
 export function QRDisplayBox() {
   const showQR = useQRScoutState(state => state.showQR);
   const qrData = useQRScoutState(state => state.qrData);
-  
-  const title = `${getFieldValue('robot')} - M${getFieldValue(
-    'matchNumber',
-  )}`.toUpperCase();
+  const title = useQRScoutState(state => state.committedTitle);
 
   const handleCopyData = useCallback(() => {
     if (qrData) {
       navigator.clipboard.writeText(qrData);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [qrData]);
 
@@ -38,9 +34,7 @@ export function QRDisplayBox() {
       canvas.toBlob(blob => {
         if (blob) {
           const item = new ClipboardItem({ "image/png": blob });
-          navigator.clipboard.write([item]).then(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }).catch(() => {
+          navigator.clipboard.write([item]).catch(() => {
             alert("Error copying image");
           });
         }

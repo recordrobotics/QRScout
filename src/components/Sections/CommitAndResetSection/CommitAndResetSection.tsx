@@ -44,9 +44,10 @@ export function CommitAndResetSection() {
     };
 
     const qrCodeData = fieldValues.map(f => f.value).join(formData.delimiter);
+    const title = `${teamNumberVal} - M${matchNumberVal}`.toUpperCase();
 
     await queueMatchForSync(matchData);
-    setQRData(qrCodeData);
+    setQRData(qrCodeData, title);
     resetFields();
     
     // Smooth scroll to the QR display area if needed, 

@@ -67,6 +67,7 @@ export interface QRScoutState {
   fieldValues: { code: string; value: any }[];
   showQR: boolean;
   qrData?: string;
+  committedTitle?: string;
   matchData?: MatchData[];
 }
 
@@ -114,8 +115,8 @@ export function updateValue(code: string, data: any) {
   );
 }
 
-export function setQRData(data: string, show: boolean = true) {
-  useQRScoutState.setState({ qrData: data, showQR: show });
+export function setQRData(data: string, title: string, show: boolean = true) {
+  useQRScoutState.setState({ qrData: data, committedTitle: title, showQR: show });
 }
 
 export function hideQR() {
@@ -129,6 +130,7 @@ export function getFieldValue(code: string) {
 
 export function resetFields() {
   window.dispatchEvent(new CustomEvent('resetFields', { detail: 'reset' }));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 export function forceResetFields() {
