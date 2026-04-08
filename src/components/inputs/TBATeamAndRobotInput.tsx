@@ -10,6 +10,7 @@ import { useEvent } from '@/hooks';
 import {
   getFieldValue,
   inputSelector,
+  setAlliancePosition,
   updateValue,
   useQRScoutState,
 } from '@/store/store';
@@ -22,6 +23,9 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
     inputSelector<TBATeamAndRobotInputData>(props.section, props.code),
   );
   const matchData = useQRScoutState(state => state.matchData);
+  const selectedAlliancePosition = useQRScoutState(
+    state => state.selectedAlliancePosition,
+  );
   const selectedMatchNumber = useQRScoutState(() => {
     const value = getFieldValue('matchNumber');
     return typeof value === 'number' ? value : null;
@@ -41,14 +45,12 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
       return [];
     }
 
-    // Filter for qualification matches only
     const match = matchData.find(
       m => m.comp_level === 'qm' && m.match_number === selectedMatchNumber,
     );
 
     if (!match) return [];
 
-    // Extract all team numbers from both alliances with their positions
     const teams: Array<{
       teamNumber: number;
       robotPosition: string;
@@ -56,7 +58,6 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
       position: number;
     }> = [];
 
-    // Red alliance teams
     match.alliances.red.team_keys.forEach((teamKey, index) => {
       const teamNumber = parseInt(teamKey.substring(3));
       if (!isNaN(teamNumber)) {
@@ -69,7 +70,6 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
       }
     });
 
-    // Blue alliance teams
     match.alliances.blue.team_keys.forEach((teamKey, index) => {
       const teamNumber = parseInt(teamKey.substring(3));
       if (!isNaN(teamNumber)) {
@@ -85,16 +85,31 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
     return teams;
   }, [matchData, selectedMatchNumber]);
 
+  // When match number changes, auto-update team number to whoever holds the saved alliance position
+  useEffect(() => {
+    if (!selectedAlliancePosition || teamOptions.length === 0) return;
+    const team = teamOptions.find(t => t.robotPosition === selectedAlliancePosition);
+    if (team) {
+      setValue(team.teamNumber);
+    } else {
+      setValue(null);
+      setAlliancePosition(undefined);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMatchNumber, teamOptions]);
+
   const resetState = useCallback(
     ({ force }: { force: boolean }) => {
       if (force) {
         setValue(data.defaultValue || null);
+        setAlliancePosition(undefined);
         return;
       }
       if (data.formResetBehavior === 'preserve') {
         return;
       }
       setValue(data.defaultValue || null);
+      setAlliancePosition(undefined);
     },
     [data.defaultValue, data.formResetBehavior],
   );
@@ -105,9 +120,16 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
     updateValue(props.code, value);
   }, [value, props.code]);
 
-  const handleSelectChange = useCallback((selectedValue: string) => {
-    setValue(parseInt(selectedValue));
-  }, []);
+  const handleSelectChange = useCallback(
+    (robotPosition: string) => {
+      const team = teamOptions.find(t => t.robotPosition === robotPosition);
+      if (team) {
+        setValue(team.teamNumber);
+        setAlliancePosition(robotPosition);
+      }
+    },
+    [teamOptions],
+  );
 
   // Use a dropdown select if we have team options, otherwise use a regular number input
   if (teamOptions.length > 0) {
@@ -115,7 +137,7 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
       <Select
         name={data.title}
         onValueChange={handleSelectChange}
-        value={value ? value.toString() : ''}
+        value={selectedAlliancePosition || ''}
       >
         <SelectTrigger>
           <SelectValue placeholder="Select a team" />
@@ -123,8 +145,8 @@ export default function TBATeamAndRobotInput(props: ConfigurableInputProps) {
         <SelectContent>
           {teamOptions.map(team => (
             <SelectItem
-              key={`${team.teamNumber}|${team.robotPosition}`}
-              value={team.teamNumber.toString()}
+              key={team.robotPosition}
+              value={team.robotPosition}
             >
               Team {team.teamNumber} ({team.alliance} {team.position})
             </SelectItem>

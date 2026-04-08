@@ -69,6 +69,7 @@ export interface QRScoutState {
   qrData?: string;
   committedTitle?: string;
   matchData?: MatchData[];
+  selectedAlliancePosition?: string;
 }
 
 const initialState: QRScoutState = {
@@ -147,6 +148,7 @@ export function setFormData(config: Config) {
     ...oldState,
     fieldValues: newFieldValues,
     formData: config,
+    selectedAlliancePosition: undefined,
   });
 }
 
@@ -186,4 +188,8 @@ export function inputSelector<T extends InputBase>(
 
 export function setMatchData(matchData: MatchData[]) {
   useQRScoutState.setState({ matchData });
+}
+
+export function setAlliancePosition(position: string | undefined) {
+  useQRScoutState.setState({ selectedAlliancePosition: position });
 }
